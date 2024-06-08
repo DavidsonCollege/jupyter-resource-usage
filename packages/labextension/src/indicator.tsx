@@ -16,7 +16,7 @@ const IndicatorFiller = ({
     <div
       className="jp-IndicatorFiller"
       style={{
-        width: `${percentage * 100}%`,
+        width: `${Math.min(100.0, percentage * 100)}%`,
         background: `${color}`,
       }}
     />
