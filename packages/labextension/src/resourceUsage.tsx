@@ -47,11 +47,14 @@ export class ResourceUsageStatus extends VDomRenderer<ResourceUsage.Model> {
         this.model.units
       );
     }
+      /* XXX: Remove CPU status bar display */
+    /*
     if (this.model.cpuAvailable) {
       text = `CPU: ${(this.model.currentCpuPercent * 100).toFixed(
         Private.DECIMAL_PLACES
-      )} % ${text}`;
+      )}% ${text}`;
     }
+    */
     if (!this.model.usageWarning) {
       return (
         <TextItem
