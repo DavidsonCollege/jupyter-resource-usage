@@ -43,7 +43,7 @@ class ApiHandler(APIHandler):
                 if hasattr(info, "pss"):
                     pss = (pss or 0) + info.pss
                 rss += info.rss
-            except (psutil.NoSuchProcess, psutil.AccessDenied) as e:
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
                 pass
 
         if callable(config.mem_limit):
@@ -63,7 +63,7 @@ class ApiHandler(APIHandler):
 
         # Optionally get CPU information
         if config.track_cpu_percent:
-            cpu_count = psutil.cpu_count()
+            cpu_count = len(psutil.Process().cpu_affinity())
             cpu_percent = await self._get_cpu_percent(all_processes)
 
             if config.cpu_limit != 0:
@@ -84,11 +84,12 @@ class ApiHandler(APIHandler):
                 return p.cpu_percent(interval=0.05)
             # Avoid littering logs with stack traces complaining
             # about dead processes having no CPU usage
-            except:
+            except: # pylint: disable=bare-except
                 return 0
-
-        return sum([get_cpu_percent(p) for p in all_processes])
-
+        val = 0.0
+        for pval in self.executor.map(get_cpu_percent, all_processes):
+            val += pval
+        return pval
 
 class KernelUsageHandler(APIHandler):
     @web.authenticated

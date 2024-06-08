@@ -35,14 +35,14 @@ const IndicatorBar = ({
   percentage: number;
   baseColor: string;
 }): ReactElement => {
-  const [isSparklines, setIsSparklines] = useState(false);
+  const [isSparklines, setIsSparklines] = useState(true);
 
   const toggleSparklines = (): void => {
     setIsSparklines(!isSparklines);
   };
 
   const color =
-    percentage > 0.5 ? (percentage > 0.8 ? 'red' : 'orange') : baseColor;
+    percentage > 0.7 ? (percentage > 0.9 ? 'red' : 'orange') : baseColor;
 
   return (
     <div className="jp-IndicatorBar" onClick={(): void => toggleSparklines()}>
@@ -104,7 +104,6 @@ export const IndicatorComponent = ({
               />
             </div>
           )}
-          <div className="jp-IndicatorText">{text}</div>
         </div>
       )}
     </>
