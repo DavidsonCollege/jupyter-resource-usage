@@ -22,7 +22,7 @@ const CpuViewComponent = ({
   const update = (): void => {
     const { cpuLimit, currentCpuPercent } = model;
     const newValues = model.values.map((value) =>
-      Math.min(1, value.cpuPercent / (cpuLimit || 1))
+      Math.min(1, value.cpuPercent)
     );
     const newText = `${(currentCpuPercent * 100).toFixed(0)}%`;
     setText(newText);
