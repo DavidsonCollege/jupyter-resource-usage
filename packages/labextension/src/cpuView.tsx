@@ -20,11 +20,10 @@ const CpuViewComponent = ({
   const [values, setValues] = useState<number[]>([]);
 
   const update = (): void => {
-    const { cpuLimit, currentCpuPercent } = model;
     const newValues = model.values.map((value) =>
-      Math.min(1, value.cpuPercent)
+      Math.min(100.0, value.cpuPercent)
     );
-    const newText = `${(currentCpuPercent * 100).toFixed(0)}%`;
+    const newText = `${(model.currentCpuPercent * 100).toFixed(0)}%`;
     setText(newText);
     setValues(newValues);
   };
