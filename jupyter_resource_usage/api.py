@@ -86,11 +86,8 @@ class ApiHandler(APIHandler):
             # about dead processes having no CPU usage
             except: # pylint: disable=bare-except
                 return 0
-        val = 0.0
-        for pval in self.executor.map(get_cpu_percent, all_processes):
-            val += pval
-        return pval
-
+        return sum(map(get_cpu_percent, all_processes))
+        
 class KernelUsageHandler(APIHandler):
     @web.authenticated
     async def get(self, matched_part=None, *args, **kwargs):
