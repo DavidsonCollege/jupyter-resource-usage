@@ -19,6 +19,7 @@ type Usage = {
   pid: number;
   host_cpu_percent: number;
   cpu_count: number;
+  cpu_usable: number;
   host_usage_flag: boolean;
   host_virtual_memory: {
     active: number;
@@ -296,7 +297,10 @@ const KernelUsage = (props: {
                 {props.trans.__('Process ID:')} {usage.pid}
               </div>
               <div className="jp-KernelUsage-separator">
-                {props.trans.__('CPU:')} {usage.kernel_cpu}
+                  {props.trans.__('Session CPU:')} {(usage.kernel_cpu / usage.cpu_usable).toFixed(2)}%
+              </div>
+              <div className="jp-KernelUsage-separator">
+                  {props.trans.__('Host CPU:')} {(usage.kernel_cpu / usage.cpu_count).toFixed(2)}%
               </div>
               <div className="jp-KernelUsage-separator">
                 {props.trans.__('Memory:')}{' '}
@@ -305,19 +309,6 @@ const KernelUsage = (props: {
               <hr className="jp-KernelUsage-section-separator"></hr>
               {usage?.host_usage_flag ? (
                 <>
-                  <h4 className="jp-KernelUsage-section-separator">
-                    {props.trans.__('Host CPU')}
-                  </h4>
-                  {usage.host_cpu_percent && (
-                    <div className="jp-KernelUsage-separator">
-                      {props.trans._n(
-                        '%2%% used on %1 CPU',
-                        '%2%% used on %1 CPUs',
-                        usage.cpu_count,
-                        usage.host_cpu_percent.toFixed(1)
-                      )}
-                    </div>
-                  )}
                   <h4 className="jp-KernelUsage-section-separator">
                     {props.trans.__('Host Virtual Memory')}
                   </h4>

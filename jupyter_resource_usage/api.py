@@ -136,7 +136,17 @@ class KernelUsageHandler(APIHandler):
                 res = await res
             if res:
                 res["kernel_id"] = kernel_id
+                
+            # get usable core count
+            cpu_count = len(psutil.Process().cpu_affinity())
+            
+            # record content
             res["content"].update({"host_usage_flag": config.show_host_usage})
+            # add cpu_usable to res['content']
+            
+            res["content"]["cpu_usable"] = cpu_count
+            
+            # store json
             out = json.dumps(res, default=date_default)
         client.stop_channels()
         self.write(out)
