@@ -193,7 +193,7 @@ export namespace ResourceUsage {
       this._cpuLimit = value.limits.cpu ? value.limits.cpu.cpu : null;
       this._cpuAvailable = value.cpu_percent !== undefined;
       this._currentCpuPercent = /* normalize cpu percent to be between 0.0 and 1.0 */
-        value.cpu_percent !== undefined ? value.cpu_percent / ((value.cpu_count !== undefined ? value.cpu_count : 1.0)) : 0;
+        (value.cpu_percent !== undefined) ? value.cpu_percent / (this._cpuLimit ? this._cpuLimit : 1) : 0;
 
       this._values.push({ memoryPercent, cpuPercent: this._currentCpuPercent });
       this._values.shift();
