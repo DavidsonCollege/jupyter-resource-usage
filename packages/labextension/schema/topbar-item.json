@@ -17,7 +17,7 @@
     "enable": {
       "title": "Enable resource usage indicators",
       "description": "Whether to enable resource usage indicators on topbar",
-      "default": false,
+      "default": true,
       "type": "boolean"
     },
     "refreshRate": {
